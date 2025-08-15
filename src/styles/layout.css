@@ -1,0 +1,108 @@
+@layer utilities {
+  /* Container widths */
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  /* Grid system */
+  .grid-base {
+    @apply grid gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  .grid-1 {
+    @apply grid-base grid-cols-1;
+  }
+
+  .grid-2 {
+    @apply grid-base grid-cols-1 sm:grid-cols-2;
+  }
+
+  .grid-3 {
+    @apply grid-base grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .grid-4 {
+    @apply grid-base grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
+  }
+
+  /* Flex layouts */
+  .flex-base {
+    @apply flex gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  .flex-col-base {
+    @apply flex flex-col gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  /* Responsive spacing */
+  .section {
+    @apply py-6 sm:py-8 lg:py-12;
+  }
+
+  .section-sm {
+    @apply py-4 sm:py-6 lg:py-8;
+  }
+
+  /* Safe area insets for mobile */
+  .safe-top {
+    @apply pt-safe;
+  }
+
+  .safe-bottom {
+    @apply pb-safe;
+  }
+
+  /* Responsive text */
+  .text-responsive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+
+  .heading-responsive {
+    @apply text-xl sm:text-2xl lg:text-3xl font-bold;
+  }
+
+  /* Mobile navigation */
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg z-50 safe-bottom md:hidden;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    @apply hidden md:flex flex-col w-64 bg-white border-r shadow-sm transition-all duration-300;
+  }
+
+  .sidebar-collapsed {
+    @apply w-20;
+  }
+
+  /* Main content */
+  .main-content {
+    @apply flex-1 overflow-auto transition-all duration-300;
+  }
+
+  .main-with-sidebar {
+    @apply md:ml-64;
+  }
+
+  .main-with-sidebar-collapsed {
+    @apply md:ml-20;
+  }
+
+  /* Card layouts */
+  .card-grid {
+    @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+
+  .card-list {
+    @apply flex flex-col gap-4;
+  }
+
+  /* Form layouts */
+  .form-grid {
+    @apply grid gap-4 sm:grid-cols-2;
+  }
+
+  .form-section {
+    @apply space-y-4 sm:space-y-6;
+  }
+} 

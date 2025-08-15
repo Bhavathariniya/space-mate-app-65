@@ -1,0 +1,340 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 250 84% 67%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 250 84% 98%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 250 84% 67%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 250 84% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 250 84% 67%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 250 84% 67%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 250 84% 67%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 250 84% 67%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "ss02";
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  .card-gradient {
+    @apply bg-gradient-to-br from-hostel-primary to-hostel-secondary text-white;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+  }
+
+  .btn-primary {
+    @apply bg-hostel-primary hover:bg-hostel-secondary text-white transition-colors duration-300 font-medium shadow-sm;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-hostel-primary border border-hostel-primary hover:bg-hostel-accent transition-colors duration-300;
+  }
+  
+  .input-field {
+    @apply bg-white border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-hostel-primary;
+  }
+  
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-sm;
+  }
+  
+  .hostel-card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-md;
+  }
+  
+  .section-container {
+    @apply px-4 py-6 sm:px-6 sm:py-8;
+  }
+  
+  .section-title {
+    @apply text-xl font-bold text-gray-800 mb-4;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full hover:bg-gray-400;
+}
+
+/* Mobile-first spacing adjustments */
+.container {
+  @apply px-4 sm:px-6;
+}
+
+/* Bottom nav adjustments for mobile */
+.bottom-nav {
+  @apply pb-safe;
+}
+
+/* Animation utilities */
+.animate-delayed {
+  animation-delay: 0.3s;
+}
+
+/* Bottom safe area for mobile devices */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Fixing page transitions */
+.page-transition {
+  @apply animate-fade-in;
+}
+
+/* Mobile status bar styles */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .fixed-header {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Mobile input adjustments */
+input, select, textarea {
+  font-size: 16px; /* Prevents iOS zoom on focus */
+  font-family: inherit;
+}
+
+/* Remove tap highlight on mobile */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom animations for mobile transitions */
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease forwards;
+}
+
+/* Overscroll behavior */
+html, body {
+  overscroll-behavior-y: contain;
+}
+
+/* Mobile drawer menu transitions */
+.drawer-transition {
+  transition: transform 0.3s ease;
+}
+
+/* Card design improvements */
+.feature-card {
+  @apply rounded-xl border border-gray-100 p-5 bg-white shadow-sm hover:shadow-md transition-all;
+}
+
+/* Elevation styles */
+.elevation-1 {
+  @apply shadow-sm;
+}
+
+.elevation-2 {
+  @apply shadow;
+}
+
+.elevation-3 {
+  @apply shadow-md;
+}
+
+/* Mobile button optimizations */
+.mobile-btn {
+  @apply min-h-[44px] flex items-center justify-center;
+}
+
+/* Mobile input fixes - Improved for better readability */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 8px;
+  font-size: 16px !important;
+  line-height: 1.5;
+  font-family: inherit;
+  color: #333333 !important; 
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #333333 !important;
+  opacity: 1 !important;
+  -webkit-box-shadow: none;
+}
+
+/* Ensure user-select is explicitly set for input elements */
+input, input::before, input::after {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+
+/* Fix for iOS input zoom */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select,
+  textarea,
+  input {
+    font-size: 16px !important;
+    font-family: inherit;
+  }
+}
+
+/* Fix for Android input issues */
+input:focus {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fix for input text color */
+input {
+  color: #333333 !important;
+  -webkit-text-fill-color: #333333 !important;
+}
+
+/* Fix for input background */
+input {
+  background-color: #ffffff !important;
+}
+
+/* Fix for input placeholder text style */
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: #6B7280 !important;
+  opacity: 0.8 !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* Fix for input focus state */
+input:focus {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  -webkit-text-fill-color: #333333 !important;
+}
+
+/* Additional placeholder style enhancement for webkit browsers */
+::-webkit-input-placeholder {
+  text-transform: none !important;
+  font-family: inherit !important;
+}
+
+/* Placeholder text for Mozilla */
+::-moz-placeholder {
+  text-transform: none !important;
+  font-family: inherit !important;
+}
+
+/* Placeholder text for Microsoft Edge */
+:-ms-input-placeholder {
+  text-transform: none !important;
+  font-family: inherit !important;
+}

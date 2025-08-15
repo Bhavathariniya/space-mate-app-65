@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin Test & Setup</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 40px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        .header h1 {
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+        .test-section { 
+            margin: 20px 0; 
+            padding: 20px; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 10px; 
+            background: #f8fafc;
+        }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        .warning { background-color: #fff3cd; border-color: #ffeaa7; }
+        button { 
+            padding: 12px 24px; 
+            margin: 8px; 
+            cursor: pointer; 
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #e53e3e;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #4299e1;
+            border: 2px solid #4299e1;
+        }
+        .btn-outline:hover {
+            background: #4299e1;
+            color: white;
+        }
+        pre { 
+            background: #2d3748; 
+            color: #e2e8f0;
+            padding: 15px; 
+            border-radius: 8px; 
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .credentials {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .credentials h3 {
+            margin-top: 0;
+            color: #2d3748;
+        }
+        .credential-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+        .credential-item input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-family: monospace;
+        }
+        .copy-btn {
+            padding: 6px 12px;
+            background: #718096;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .copy-btn:hover {
+            background: #4a5568;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        .status.success { background: #c6f6d5; color: #22543d; }
+        .status.error { background: #fed7d7; color: #742a2a; }
+        .status.info { background: #bee3f8; color: #2a4365; }
+        .instructions {
+            background: #fef5e7;
+            border: 1px solid #f6ad55;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #c05621;
+        }
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        .code {
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Super Admin Test & Setup</h1>
+            <p>Test and configure your super admin functionality</p>
+        </div>
+
+        <div class="test-section info">
+            <h3>📋 Instructions</h3>
+            <p>This page helps you test and set up your super admin functionality. Use the buttons below to:</p>
+            <ol>
+                <li><strong>Check Status:</strong> Verify current super admin configuration</li>
+                <li><strong>Setup Super Admin:</strong> Create a new super admin user</li>
+                <li><strong>Test Login:</strong> Verify credentials work correctly</li>
+                <li><strong>Cleanup:</strong> Remove existing super admin users</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h3>🚀 Quick Actions</h3>
+            <button class="btn-primary" onclick="checkStatus()">Check Status</button>
+            <button class="btn-success" onclick="setupSuperAdmin()">Setup Super Admin</button>
+            <button class="btn-outline" onclick="testLogin()">Test Login</button>
+            <button class="btn-danger" onclick="cleanupSuperAdmin()">Cleanup</button>
+            <button class="btn-outline" onclick="refreshPage()">Refresh Page</button>
+        </div>
+
+        <div class="credentials">
+            <h3>🔑 Default Super Admin Credentials</h3>
+            <div class="credential-item">
+                <label><strong>Email:</strong></label>
+                <input type="text" value="superadmin@spacemate.com" readonly id="emailInput">
+                <button class="copy-btn" onclick="copyToClipboard('emailInput')">Copy</button>
+            </div>
+            <div class="credential-item">
+                <label><strong>Password:</strong></label>
+                <input type="password" value="SuperAdmin2024!" readonly id="passwordInput">
+                <button class="copy-btn" onclick="copyToClipboard('passwordInput')">Copy</button>
+            </div>
+            <p><em>These are the default credentials. You can customize them in the setup process.</em></p>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Status & Results</h3>
+            <div id="status"></div>
+            <div id="results"></div>
+        </div>
+
+        <div class="instructions">
+            <h3>🎯 Next Steps</h3>
+            <ol>
+                <li>Click <strong>"Check Status"</strong> to see current super admin configuration</li>
+                <li>If no super admin exists, click <strong>"Setup Super Admin"</strong></li>
+                <li>Use <strong>"Test Login"</strong> to verify credentials work</li>
+                <li>Go to <span class="code">/login</span> page to access your application</li>
+                <li>Use the credentials above to log in as super admin</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Quick Links</h3>
+            <button class="btn-outline" onclick="goToLogin()">Go to Login Page</button>
+            <button class="btn-outline" onclick="goToSetup()">Go to Setup Page</button>
+            <button class="btn-outline" onclick="goToSuperAdmin()">Go to Super Admin Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://your-project.supabase.co';
+        const supabaseKey = 'your-anon-key';
+        
+        // You need to replace these with your actual Supabase credentials
+        // Check your .env file or Supabase dashboard
+        console.log('⚠️ Please update supabaseUrl and supabaseKey with your actual credentials');
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function showResults(data) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+
+        function copyToClipboard(inputId) {
+            const input = document.getElementById(inputId);
+            input.select();
+            document.execCommand('copy');
+            showStatus('Copied to clipboard!', 'success');
+        }
+
+        async function checkStatus() {
+            showStatus('Checking super admin status...', 'info');
+            
+            try {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('id, email, full_name, role, created_at')
+                    .eq('role', 'super_admin');
+
+                if (error) {
+                    showStatus(`Error: ${error.message}`, 'error');
+                    return;
+                }
+
+                const count = data?.length || 0;
+                const hasSingleSuperAdmin = count === 1;
+                
+                let statusMessage = `Found ${count} super admin user(s)`;
+                if (hasSingleSuperAdmin) {
+                    statusMessage += ' ✅ (Perfect!)';
+                } else if (count === 0) {
+                    statusMessage += ' ❌ (None found)';
+                } else {
+                    statusMessage += ' ⚠️ (Multiple found - needs cleanup)';
+                }
+
+                showStatus(statusMessage, hasSingleSuperAdmin ? 'success' : count === 0 ? 'error' : 'warning');
+                showResults({ count, hasSingleSuperAdmin, users: data });
+                
+            } catch (error) {
+                showStatus(`Error: ${error.message}`, 'error');
+                console.error('Status check error:', error);
+            }
+        }
+
+        async function setupSuperAdmin() {
+            showStatus('Setting up super admin...', 'info');
+            
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: 'superadmin@spacemate.com',
+                    password: 'SuperAdmin2024!',
+                    options: {
+                        data: {
+                            full_name: 'Super Administrator',
+                            role: 'super_admin',
+                            admin_sub_role: 'super_admin',
+                        }
+                    }
+                });
+
+                if (error) {
+                    showStatus(`Setup failed: ${error.message}`, 'error');
+                    return;
+                }
+
+                if (data.user) {
+                    showStatus('Super admin created successfully! ✅', 'success');
+                    showResults({ user: data.user, message: 'Setup completed' });
+                    
+                    // Wait and check status
+                    setTimeout(checkStatus, 2000);
+                } else {
+                    showStatus('Setup failed: No user data returned', 'error');
+                }
+                
+            } catch (error) {
+                showStatus(`Setup error: ${error.message}`, 'error');
+                console.error('Setup error:', error);
+            }
+        }
+
+        async function testLogin() {
+            showStatus('Testing login...', 'info');
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: 'superadmin@spacemate.com',
+                    password: 'SuperAdmin2024!',
+                });
+
+                if (error) {
+                    showStatus(`Login test failed: ${error.message}`, 'error');
+                    return;
+                }
+
+                showStatus(`Login test successful! Welcome ${data.user?.email} ✅`, 'success');
+                showResults({ user: data.user, message: 'Login successful' });
+                
+                // Sign out immediately after test
+                await supabase.auth.signOut();
+                
+            } catch (error) {
+                showStatus(`Login test error: ${error.message}`, 'error');
+                console.error('Login test error:', error);
+            }
+        }
+
+        async function cleanupSuperAdmin() {
+            if (!confirm('⚠️ This will delete ALL super admin users. Are you sure?')) {
+                return;
+            }
+
+            showStatus('Cleaning up super admin users...', 'info');
+            
+            try {
+                // Delete from user_roles first
+                const { error: roleError } = await supabase
+                    .from('user_roles')
+                    .delete()
+                    .eq('role', 'super_admin');
+
+                if (roleError) {
+                    console.error('Role deletion error:', roleError);
+                }
+
+                // Delete from profiles
+                const { error: profileError } = await supabase
+                    .from('profiles')
+                    .delete()
+                    .eq('role', 'super_admin');
+
+                if (profileError) {
+                    console.error('Profile deletion error:', profileError);
+                }
+
+                showStatus('Cleanup completed! ✅', 'success');
+                showResults({ message: 'All super admin users removed' });
+                
+                // Check status after cleanup
+                setTimeout(checkStatus, 1000);
+                
+            } catch (error) {
+                showStatus(`Cleanup error: ${error.message}`, 'error');
+                console.error('Cleanup error:', error);
+            }
+        }
+
+        function refreshPage() {
+            location.reload();
+        }
+
+        function goToLogin() {
+            window.location.href = '/login';
+        }
+
+        function goToSetup() {
+            window.location.href = '/single-super-admin-setup';
+        }
+
+        function goToSuperAdmin() {
+            window.location.href = '/super-admin';
+        }
+
+        // Auto-check status on page load
+        window.addEventListener('load', () => {
+            showStatus('Page loaded. Click "Check Status" to begin.', 'info');
+        });
+
+        // Make functions available globally for debugging
+        window.checkStatus = checkStatus;
+        window.setupSuperAdmin = setupSuperAdmin;
+        window.testLogin = testLogin;
+        window.cleanupSuperAdmin = cleanupSuperAdmin;
+    </script>
+</body>
+</html>
+
