@@ -69,7 +69,7 @@ const RoleSelection = () => {
               <User className="text-hostel-primary w-6 h-6" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="font-semibold text-lg text-gray-800">PG Guest</h2>
+              <h2 className="font-semibold text-lg text-gray-800">User</h2>
               <p className="text-sm text-gray-600 truncate">Access your resident details and services</p>
             </div>
           </div>

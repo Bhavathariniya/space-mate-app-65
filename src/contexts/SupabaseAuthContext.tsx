@@ -20,7 +20,7 @@ interface AuthContextType {
   profile: Profile | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  signUp: (email: string, password: string, userData: { full_name: string; role: string; admin_sub_role?: string }) => Promise<{ error: any }>;
+  signUp: (email: string, password: string, userData: { full_name: string; role: string; admin_sub_role?: string; gender?: string }) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   updateProfile: (updates: Partial<Profile>) => Promise<{ error: any }>;
@@ -111,7 +111,7 @@ export const SupabaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = async (email: string, password: string, userData: { full_name: string; role: string; admin_sub_role?: string }) => {
+  const signUp = async (email: string, password: string, userData: { full_name: string; role: string; admin_sub_role?: string; gender?: string }) => {
     try {
       const redirectUrl = `${window.location.origin}/`;
       
@@ -124,6 +124,7 @@ export const SupabaseAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
             full_name: userData.full_name,
             role: userData.role,
             admin_sub_role: userData.admin_sub_role,
+            gender: userData.gender,
           }
         }
       });

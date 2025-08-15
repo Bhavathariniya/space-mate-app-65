@@ -21,6 +21,7 @@ interface PGProperty {
   total_rooms: number;
   occupied_rooms: number;
   rating: number;
+  pgType?: 'co-living' | 'men-only' | 'women-only';
 }
 
 interface Room {
@@ -424,9 +425,9 @@ const GuestSignupForm: React.FC<GuestSignupFormProps> = ({ onBack, onComplete, i
                                 <span className="text-xs text-gray-500">
                                   {property.city}, {property.state} - ₹{property.monthly_rent}/month
                                 </span>
-                                <span className="text-xs text-blue-600">
-                                  Type: {property.pg_type || 'co-living'}
-                                </span>
+                                 <span className="text-xs text-blue-600">
+                                   Type: {property.pgType || 'co-living'}
+                                 </span>
                               </div>
                             </SelectItem>
                           ))}
@@ -442,9 +443,9 @@ const GuestSignupForm: React.FC<GuestSignupFormProps> = ({ onBack, onComplete, i
                           <span>Monthly Rent: ₹{selectedPropertyData.monthly_rent}</span>
                           <span>Available Rooms: {selectedPropertyData.total_rooms - selectedPropertyData.occupied_rooms}</span>
                         </div>
-                        <div className="text-xs text-blue-600 mt-1">
-                          Type: {selectedPropertyData.pg_type || 'co-living'}
-                        </div>
+                         <div className="text-xs text-blue-600 mt-1">
+                           Type: {selectedPropertyData.pgType || 'co-living'}
+                         </div>
                       </div>
                     )}
                   </>
